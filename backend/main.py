@@ -63,7 +63,7 @@ app.add_middleware(
 
 # --- API Endpoints ---
 
-@app.post("/api/vitals", response_model=StoredVitalSignReading, status_code=201)
+@app.post("/", response_model=StoredVitalSignReading, status_code=201)
 async def create_vital_reading(reading: VitalSignReading):
     """
     Receive and store a new vital sign reading.
@@ -83,7 +83,7 @@ async def create_vital_reading(reading: VitalSignReading):
     db_vitals.append(stored_reading)
     return stored_reading
 
-@app.get("/api/vitals/latest", response_model=Optional[StoredVitalSignReading])
+@app.get("/", response_model=Optional[StoredVitalSignReading])
 async def get_latest_vital_reading():
     """
     Retrieve the most recent vital sign reading.
@@ -93,7 +93,7 @@ async def get_latest_vital_reading():
         return None 
     return db_vitals[-1]
 
-@app.get("/api/vitals/history", response_model=List[StoredVitalSignReading])
+@app.get("/", response_model=List[StoredVitalSignReading])
 async def get_vitals_history(limit: int = 10):
     """
     Retrieve a list of the most recent vital sign readings.
