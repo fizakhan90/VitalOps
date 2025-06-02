@@ -4,7 +4,7 @@
 **👥 Team:** *LazyBird*  
 **🌐 Live App:** [https://vitalops-app.onrender.com](https://vitalops.onrender.com/)  
 **💻 GitHub Repo:** [https://github.com/fizakhan90/vitalops](https://github.com/fizakhan90/vitalops)  
-**🎥 Demo Video:** *[https://youtu.be/mRjzHdPHK4E?feature=shared]*
+**🎥 Demo Video:** https://youtu.be/mRjzHdPHK4E?feature=shared
 
 ---
 
@@ -73,7 +73,7 @@ This project lives at the **intersection of Health and DevOps**, showing how bot
 
 **Simulated IoT Hardware**  
 - Arduino UNO R4 WiFi   
-- PPG Sensor (for HR and SpO₂)
+- Max30102-PPG Sensor (for HR and SpO₂) 
 
 ---
 
@@ -137,6 +137,6 @@ docker run -p 5000:5000 vitalops-local
 ![Live Dashboard Screenshot](vitalops_dashboard.png)
 
 ### 💻  Hardware Setup
-![Arduino R4 Wifi + PPG sensor](hardware_setup.jpg)
+![Arduino R4 Wifi + Max30101-PPG sensor](hardware_setup.jpg)
 
 
