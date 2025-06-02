@@ -1,5 +1,5 @@
 # 1. Base image
-FROM python:3.9-slim 
+FROM python:3.10-slim 
 # Or your preferred Python version
 
 # 2. Set working directory
