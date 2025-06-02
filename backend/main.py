@@ -44,6 +44,7 @@ origins = [
     "http://localhost:5000",
     "http://127.0.0.1:5000",
     "http://localhost:3000",
+    "https://vitalops.onrender.com/",
     # Add your deployed frontend URL here once you have it, and your ngrok URL if testing
     # e.g., "https://your-frontend.vercel.app",
     # "https://vitalops.onrender.com" # Allow requests from itself if frontend is served from same domain
