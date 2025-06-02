@@ -11,7 +11,7 @@ interface VitalSign {
   timestamp_server: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_BASE_URL = '';
 
 export default function DashboardPage() {
   const [latestVitals, setLatestVitals] = useState<VitalSign | null>(null);
@@ -83,13 +83,16 @@ export default function DashboardPage() {
       } else if (typeof err === 'string') {
         // If the error thrown was just a string
         specificErrorMessage = err;
-      } else if (err && typeof err === 'object' && 'message' in err && typeof (err as any).message === 'string') {
-        // If it's some other object that happens to have a 'message' property (less common for fetch errors)
-        specificErrorMessage = (err as { message: string }).message;
+      } else if (
+        err && 
+        typeof err === 'object' && 
+        'message' in err && // Check if 'message' property exists
+        typeof (err as { message?: unknown }).message === 'string' // Check if that message property is a string
+      ) {
+        // If all checks pass, we can be more confident in asserting the type to extract the message
+        specificErrorMessage = (err as { message: string }).message; 
       }
-      // Add more 'else if' blocks here if you expect other specific error types/shapes
-
-      setError(specificErrorMessage); // Set the determined error message
+      setError(specificErrorMessage);
     } finally {
       setIsLoading(false);
     }
