@@ -8,46 +8,45 @@
 
 ---
 
-## ⚡ The Idea: Innovation Happens at Intersections
+## ⚡ The Idea: Real Innovation Happens at Intersections
 
-VitalOps was born at the intersection of **Healthcare** and **DevOps**, where real-world patient needs meet robust engineering practices.
+VitalOps was built where **Healthcare** meets **DevOps** — combining real patient needs with reliable engineering.
 
-In response to the **Intersection Challenge** theme of the X-RAPTORS Hackathon, we created **VitalOps**, a real-time health monitoring platform built using DevOps best practices, to deliver critical health insights reliably and efficiently.
+For the **Intersection Challenge** at X-RAPTORS Hackathon, we created **VitalOps**, a real-time health monitoring system that uses actual hardware and DevOps tools to deliver critical health data in a fast, efficient, and reliable way.
 
 ---
 
 ## 🎯 Mission: Make HealthTech Reliable, Fast & Scalable
 
-**VitalOps** is a remote vitals monitoring system that:
-- Simulates data from an IoT device (PPG sensor + Arduino R4 wifi).
-- Ingests and validates Heart Rate and SpO₂ data in real time.
-- Displays vitals on a live dashboard.
-- Uses a fully automated CI/CD pipeline for fast and reliable deployment.
+**VitalOps** is a remote health monitoring system that:
+- Uses **real hardware** — an Arduino R4 WiFi board with a PPG sensor — to collect heart rate and SpO₂ data.
+- Sends and validates this data in real time using our backend.
+- Shows live vitals on a clean, responsive dashboard.
+- Uses a fully automated **CI/CD pipeline** for quick and dependable updates.
 
-This project could only exist at the **collision point of Health and DevOps**, making it a true embodiment of the Intersection Challenge.
+This project lives at the **intersection of Health and DevOps**, showing how both fields can work together to solve real problems.
 
 ---
 
 ## 🔀 The Power of the Intersection: Health x DevOps
 
-### 🏥 Health Domain
-- Real-time collection of critical vitals (Heart Rate, SpO₂).
-- Enables remote patient monitoring and elderly care.
-- User-friendly UI with current and historical readings.
-- Vitals status labels: **Normal**, **Warning**, **Critical**.
+### 🏥 Health Side
+- Tracks important vitals (heart rate and oxygen levels) in real time.
+- Helps with remote health monitoring, especially useful for elderly care.
+- Easy-to-use dashboard with live and historical data.
+- Health status indicators: **Normal**, **Warning**, or **Critical**.
 
-### ⚙️ DevOps Domain
-- **CI/CD Pipeline:** GitHub Actions automate build, test, containerization, and deployment.
-- **Containerization:** Combined backend + frontend Docker image for portability and consistency.
-- **GHCR + Render.com:** Docker image hosting and seamless production deployment.
-- **Frontend Export:** Next.js statically exported and served via FastAPI.
+### ⚙️ DevOps Side
+- **CI/CD pipeline** with GitHub Actions to automate testing and deployment.
+- Backend and frontend packed in one **Docker** container for consistency.
+- Hosted using **GHCR** and deployed via **Render.com**.
+- The frontend is statically exported and served through FastAPI.
 
-### 🎇 Fusion Value
-- Health systems need **reliability** → DevOps ensures uptime and repeatability.
-- Medical software requires **agility** → CI/CD allows quick, safe iterations.
-- The outcome: A **resilient, scalable health monitoring system** that couldn't be built in either domain alone.
+### 🎇 What Happens When They Meet
+- Health systems need to be **reliable** → DevOps makes sure they are.
+- Medical software needs to **move fast** → CI/CD helps push safe updates quickly.
+- The result: A **stable, scalable, real-time health system** powered by actual hardware and smart software.
 
----
 
 ## 🛠 Features
 
