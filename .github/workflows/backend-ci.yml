@@ -1,0 +1,42 @@
+name: VitalOps Backend CI
+
+on:
+  push:
+    branches: [ main ] # Or your primary branch
+    paths:
+      - 'backend/**'  # Only run if files in the backend directory change
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+
+jobs:
+  build-backend-docker:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Use a more recent version
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3 # Use a more recent version
+
+      # Optional: Login to Docker Hub or GitHub Container Registry if you want to push
+      # - name: Log in to GitHub Container Registry
+      #   if: github.event_name != 'pull_request' # Don't push on PRs from forks
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5 # Use a more recent version
+        with:
+          context: ./backend # Path to the directory containing your backend's Dockerfile
+          file: ./backend/Dockerfile # Explicit path to Dockerfile
+          push: false # Set to true if you log in and want to push the image
+          tags: yourusername/vitalops-backend:latest # Example tag
+          # For GitHub Container Registry, if pushing:
+          # tags: ghcr.io/${{ github.repository_owner }}/vitalops-backend:${{ github.sha }}
+          # Or ghcr.io/${{ github.repository_owner }}/vitalops-backend:latest
