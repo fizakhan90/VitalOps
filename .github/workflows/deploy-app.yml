@@ -98,4 +98,4 @@ jobs:
         # Alternatively, use a dedicated action for more features (like waiting for deploy)
         # uses: jsmrcaga/render-deploy-hook@v1
         # with:
-        #   hook_url: ${{ secrets.RENDER_DEPLOY_HOOKS_RENDER }}
+        #   hook_url: ${{ secrets.RENDER_DEPLOY_HOOK_VITALOPS }}
