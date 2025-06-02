@@ -17,6 +17,9 @@ on:
 jobs:
   build-and-package:
     runs-on: ubuntu-latest
+    permissions: # Add permissions at the job level
+      contents: read  # For actions/checkout
+      packages: write # For pushing to GHCR
     
     steps:
       - name: Checkout code
@@ -50,9 +53,15 @@ jobs:
         run: rm -rf backend/static/*
 
       - name: Copy Next.js build output to backend static folder
-        run: cp -a frontend/out/. backend/static/
-        # cp -a frontend/out/. means copy CONTENTS of frontend/out/
-        # into backend/static/
+        run: |
+          echo "Copying from frontend/out to backend/static"
+          ls -la frontend/out # List what's in frontend/out before copy
+          cp -a frontend/out/. backend/static/
+          # cp -a frontend/out/. means copy CONTENTS of frontend/out/ (including hidden like .next if present)
+          # into backend/static/
+        # Add error handling or verification if needed
+        # if [ $? -ne 0 ]; then echo "Copy failed!"; exit 1; fi
+
 
       - name: List contents of backend static folder (for debugging)
         run: ls -R backend/static
@@ -68,7 +77,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }} # This token now has packages:write permission
 
       - name: Build and push combined Docker image
         uses: docker/build-push-action@v5
@@ -79,5 +88,5 @@ jobs:
           # Push only on pushes to main, not on PRs
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
-              ghcr.io/${{ github.repository_owner }}/vitalops:sha-${{ github.sha }}
-              ghcr.io/${{ github.repository_owner }}/vitalops:latest 
+            ghcr.io/${{ github.repository_owner }}/vitalops:sha-${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/vitalops:latest
