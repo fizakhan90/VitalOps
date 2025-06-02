@@ -2,7 +2,7 @@
 
 **🚀 X-RAPTORS Hackathon 2025 – The Intersection Challenge**  
 **👥 Team:** *LazyBird*  
-**🌐 Live App:** [https://vitalops-app.onrender.com](https://vitalops-app.onrender.com)  
+**🌐 Live App:** [https://vitalops-app.onrender.com](https://vitalops.onrender.com/)  
 **💻 GitHub Repo:** [https://github.com/fizakhan90/vitalops](https://github.com/fizakhan90/vitalops)  
 **🎥 Demo Video:** *[Add your demo video link here]*
 
