@@ -80,8 +80,7 @@ This project could only exist at the **collision point of Health and DevOps**, m
 
 ## 🧩 Architecture Overview
 
-> _[Add architecture diagram or description here]_  
-> You can use Mermaid, PlantUML, or upload an image (e.g., `/assets/architecture.png`).
+![Architectural-Overview](flowchart.png)
 
 ---
 
