@@ -123,7 +123,7 @@ npm install
 
 npm run dev
 ```
-### 4.Dockerized App (Full Stack)
+### 4. Dockerized App (Full Stack)
 ```bash
 # After copying frontend/out/* → backend/static/
 cd backend
@@ -132,4 +132,12 @@ docker run -p 5000:5000 vitalops-local
 
 # App available at: http://localhost:5000
 ```
+## 📸 Screenshots
+
+### 📊 Live Dashboard with Status Indicator
+![Live Dashboard Screenshot](vitalops_dashboard.png)
+
+### 💻  Hardware Setup
+![Arduino R4 Wifi + PPG sensor](hardware_setup.jpg)
+
 
