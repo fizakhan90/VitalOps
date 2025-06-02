@@ -65,20 +65,37 @@ export default function DashboardPage() {
       );
       setHistory(sortedHistory);
       setLastUpdate(new Date());
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error fetching data:", err);
-      if (err.name === "AbortError") {
-        setError("Request timed out. The API server might be slow or unreachable.");
-      } else if (err.message && err.message.includes("Failed to fetch")) { 
-        setError("Network error: Cannot connect to the API. The server might be down or there might be CORS issues.");
-      } else {
-        setError(err.message || "An unknown error occurred while fetching data.");
+      let specificErrorMessage = "An unknown error occurred while fetching data."; // Default message
+
+      if (err instanceof Error) {
+        // If it's an Error instance, we know it has 'name' and 'message' properties.
+        if (err.name === "AbortError") {
+          specificErrorMessage = "Request timed out. The API server might be slow or unreachable.";
+        } else if (err.message.toLowerCase().includes("failed to fetch")) {
+          // 'Failed to fetch' is a common browser message for network errors (CORS, server down, DNS issues)
+          specificErrorMessage = "Network error: Cannot connect to the API. The server might be down or there are network/CORS issues.";
+        } else {
+          // Use the specific error message from the Error object
+          specificErrorMessage = err.message;
+        }
+      } else if (typeof err === 'string') {
+        // If the error thrown was just a string
+        specificErrorMessage = err;
+      } else if (err && typeof err === 'object' && 'message' in err && typeof (err as any).message === 'string') {
+        // If it's some other object that happens to have a 'message' property (less common for fetch errors)
+        specificErrorMessage = (err as { message: string }).message;
       }
-      
+      // Add more 'else if' blocks here if you expect other specific error types/shapes
+
+      setError(specificErrorMessage); // Set the determined error message
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
+      
+    
 
   useEffect(() => {
     setIsLoading(true); 
