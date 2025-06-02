@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field, field_validator, ValidationError # Removed unused 'validator' from wsgiref
+from pydantic import BaseModel, Field, field_validator, ValidationError 
 from typing import List, Optional
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles # Make sure this is imported
-from fastapi.responses import FileResponse  # If you explicitly serve index.html
+from fastapi.staticfiles import StaticFiles 
+from fastapi.responses import FileResponse  
 
 # --- Pydantic Models (Data Validation & Serialization) ---
 class VitalSignReading(BaseModel):
@@ -45,19 +45,13 @@ origins = [
     "http://127.0.0.1:5000",
     "http://localhost:3000",
     "https://vitalops.onrender.com/",
-    # Add your deployed frontend URL here once you have it, and your ngrok URL if testing
-    # e.g., "https://your-frontend.vercel.app",
-    # "https://vitalops.onrender.com" # Allow requests from itself if frontend is served from same domain
+   
 ]
-# Add your ngrok URL from the error log, ensuring no trailing spaces
-# For example, if your ngrok URL was "http://6de5-103-249-77-122.ngrok-free.app "
-# it should be "http://6de5-103-249-77-122.ngrok-free.app"
-# It's good practice to dynamically get this or use a wildcard for dev if secure enough.
-# For production, list specific origins.
+
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins, # Be specific in production
+    allow_origins=origins, 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -90,13 +84,10 @@ async def get_vitals_history(limit: int = 10):
         return []
     return db_vitals[-limit:]
 
-# Optional: A simple health check or API root message at a different path
-@app.get("/api/ping", include_in_schema=False) # Or just /api/
+@app.get("/api/ping", include_in_schema=False) 
 async def api_root_message():
     return {"message": "Welcome to the VitalOps API endpoints!"}
 
 
-# --- Serve Static Frontend Files (Mount this AFTER your API routes) ---
-# This will serve index.html from the 'static' directory for requests to '/'
-# and other files like CSS/JS relative to that.
+
 app.mount("/", StaticFiles(directory="static", html=True), name="static-frontend")

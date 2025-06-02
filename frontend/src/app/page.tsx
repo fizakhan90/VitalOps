@@ -22,7 +22,7 @@ export default function DashboardPage() {
 
   const fetchData = async () => {
     
-    setError(null); // Clear previous errors before fetching
+    setError(null); 
 
     try {
       console.log("Fetching data from:", API_BASE_URL);
@@ -70,26 +70,21 @@ export default function DashboardPage() {
       let specificErrorMessage = "An unknown error occurred while fetching data."; // Default message
 
       if (err instanceof Error) {
-        // If it's an Error instance, we know it has 'name' and 'message' properties.
         if (err.name === "AbortError") {
           specificErrorMessage = "Request timed out. The API server might be slow or unreachable.";
         } else if (err.message.toLowerCase().includes("failed to fetch")) {
-          // 'Failed to fetch' is a common browser message for network errors (CORS, server down, DNS issues)
           specificErrorMessage = "Network error: Cannot connect to the API. The server might be down or there are network/CORS issues.";
         } else {
-          // Use the specific error message from the Error object
           specificErrorMessage = err.message;
         }
       } else if (typeof err === 'string') {
-        // If the error thrown was just a string
         specificErrorMessage = err;
       } else if (
         err && 
         typeof err === 'object' && 
-        'message' in err && // Check if 'message' property exists
-        typeof (err as { message?: unknown }).message === 'string' // Check if that message property is a string
+        'message' in err && 
+        typeof (err as { message?: unknown }).message === 'string' 
       ) {
-        // If all checks pass, we can be more confident in asserting the type to extract the message
         specificErrorMessage = (err as { message: string }).message; 
       }
       setError(specificErrorMessage);

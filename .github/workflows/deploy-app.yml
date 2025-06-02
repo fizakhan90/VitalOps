@@ -2,8 +2,8 @@ name: VitalOps App CI/CD
 
 on:
   push:
-    branches: [ main ] # Or your primary branch
-    paths: # Trigger if backend, frontend, or this workflow changes
+    branches: [ main ] 
+    paths: 
       - 'backend/**'
       - 'frontend/**'
       - '.github/workflows/deploy-app.yml'
@@ -12,14 +12,14 @@ on:
     paths:
       - 'backend/**'
       - 'frontend/**'
-      # No need to trigger on workflow change for PR usually
+    
 
 jobs:
   build-and-package:
     runs-on: ubuntu-latest
-    permissions: # Add permissions at the job level
-      contents: read  # For actions/checkout
-      packages: write # For pushing to GHCR
+    permissions: 
+      contents: read  
+      packages: write 
     
     steps:
       - name: Checkout code
@@ -29,7 +29,7 @@ jobs:
       - name: Set up Node.js for Frontend
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Match your Next.js project's Node version
+          node-version: '18' 
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
@@ -38,11 +38,10 @@ jobs:
         working-directory: ./frontend
 
       - name: Build Next.js Static Export
-        run: npm run build # Assumes output: 'export' in next.config.js, output to frontend/out/
+        run: npm run build 
         working-directory: ./frontend
         env:
-          # Set API_URL to empty string for relative paths if served from same origin
-          # If your Next.js app needs this at build time for static generation
+        
           NEXT_PUBLIC_API_URL: '' 
 
       # --- Prepare Static Assets for Backend ---
@@ -59,8 +58,7 @@ jobs:
           cp -a frontend/out/. backend/static/
           # cp -a frontend/out/. means copy CONTENTS of frontend/out/ (including hidden like .next if present)
           # into backend/static/
-        # Add error handling or verification if needed
-        # if [ $? -ne 0 ]; then echo "Copy failed!"; exit 1; fi
+        
 
 
       - name: List contents of backend static folder (for debugging)
@@ -71,31 +69,26 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to GitHub Container Registry
-        # Only run on push to main, not on PRs from forks typically
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }} # This token now has packages:write permission
+          password: ${{ secrets.GITHUB_TOKEN }} 
 
       - name: Build and push combined Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./backend # Docker context is the backend folder
-                             # which now contains static/ with frontend assets
+          context: ./backend 
           file: ./backend/Dockerfile
-          # Push only on pushes to main, not on PRs
+    
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
           tags: |
             ghcr.io/${{ github.repository_owner }}/vitalops:sha-${{ github.sha }}
             ghcr.io/${{ github.repository_owner }}/vitalops:latest
          # --- Deploy to Render ---
       - name: Trigger Render Deploy Hook
-        # Only run on push to main, and if the Docker push was successful
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_VITALOPS }}
-        # Alternatively, use a dedicated action for more features (like waiting for deploy)
-        # uses: jsmrcaga/render-deploy-hook@v1
-        # with:
+        
         #   hook_url: ${{ secrets.RENDER_DEPLOY_HOOK_VITALOPS }}
